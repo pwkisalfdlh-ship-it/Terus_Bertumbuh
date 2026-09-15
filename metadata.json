@@ -1,0 +1,6 @@
+{
+  "name": "Ucapan Ulang Tahun Puitis",
+  "description": "Website ucapan selamat ulang tahun interaktif bernuansa earthy sage dengan musik latar, bait puisi animasi bertahap, dan video gitar untuk layar smartphone.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

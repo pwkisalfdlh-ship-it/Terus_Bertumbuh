@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Ucapan Ulang Tahun Puitis</title>
+  <meta name="description"
+    content="Website ucapan selamat ulang tahun interaktif bernuansa earthy sage dengan musik latar, bait puisi animasi bertahap, dan video gitar untuk layar smartphone." />
+  <meta property="og:title" content="Ucapan Ulang Tahun Puitis" />
+  <meta property="og:description"
+    content="Website ucapan selamat ulang tahun interaktif bernuansa earthy sage dengan musik latar, bait puisi animasi bertahap, dan video gitar untuk layar smartphone." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Playfair Display (Judul Elegan), Lora (Bait Puisi Ramping & Estetik), Plus Jakarta Sans (UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. VARIABEL WARNA EARTHY TONE & RESET DASAR
+       ========================================================================== */
+    :root {
+      --bg-cream: #F7F5F0;
+      --bg-surface: #FCFAF6;
+      --bg-card: rgba(255, 255, 255, 0.72);
+      --sage-subtle: #E8ECE6;
+      --sage-light: #A3B18A;
+      --sage-primary: #588157;
+      --sage-dark: #344E41;
+      --warm-terracotta: #C98A7D;
+      --warm-clay: #B07D62;
+      --text-main: #2C3531;
+      --text-muted: #5E6D64;
+      --border-soft: rgba(88, 129, 87, 0.16);
+      --shadow-warm: 0 16px 36px -10px rgba(52, 78, 65, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background-color: #EDE8DE;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Kanvas daun berguguran / partikel alam */
+    #leaves-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Container Responsif untuk Versi HP dan Versi Web PC */
+    .phone-container {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #FAF8F5 0%, #F3EFE7 50%, #EDE7DD 100%);
+      box-shadow: 0 25px 60px -15px rgba(52, 78, 65, 0.22);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 1.25rem 3.5rem 1.25rem;
+      z-index: 2;
+      scroll-behavior: smooth;
+    }
+
+    /* Scrollbar Halus & Estetik Bernuansa Sage */
+    .phone-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .phone-container::-webkit-scrollbar-track {
+      background: rgba(237, 232, 222, 0.4);
+    }
+
+    .phone-container::-webkit-scrollbar-thumb {
+      background: rgba(163, 177, 138, 0.55);
+      border-radius: 9999px;
+    }
+
+    /* Adaptasi Tampilan di Layar Desktop/PC & Tablet */
+    @media (min-width: 640px) {
+      body {
+        padding: 2.5rem 1rem;
+      }
+
+      .phone-container {
+        max-width: 480px;
+        min-height: 820px;
+        max-height: 92vh;
+        border-radius: 36px;
+        border: 8px solid #E5DFD4;
+        box-shadow: 0 30px 80px -20px rgba(52, 78, 65, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.6);
+        padding: 0 1.5rem 3.5rem 1.5rem;
+      }
+    }
+
+    /* ==========================================================================
+       2. HEADER ELEGAN & KONTROL MUSIK
+       ========================================================================== */
+    .app-header {
+      position: sticky;
+      top: 0;
+      width: calc(100% + 2.5rem);
+      margin-left: -1.25rem;
+      margin-right: -1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.35rem;
+      background: rgba(250, 248, 245, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(88, 129, 87, 0.14);
+      z-index: 50;
+      box-shadow: 0 4px 20px -8px rgba(52, 78, 65, 0.08);
+      margin-bottom: 0.75rem;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit;
+    }
+
+    .header-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .header-monogram {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FCFAF6 0%, #E9EEE6 100%);
+      border: 1px solid rgba(163, 177, 138, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(88, 129, 87, 0.12);
+      flex-shrink: 0;
+    }
+
+    .header-text-block {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+      text-align: left;
+    }
+
+    .header-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--sage-dark);
+      letter-spacing: 0.015em;
+    }
+
+    .header-phase-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--warm-clay);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .music-pill {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: 9999px;
+      background: #FFFFFF;
+      border: 1px solid rgba(88, 129, 87, 0.22);
+      color: var(--sage-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(52, 78, 65, 0.06);
+      transition: all 0.25s ease;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .music-pill:hover {
+      background: #F4EFE7;
+      border-color: var(--sage-primary);
+    }
+
+    .music-pill.playing .music-dot {
+      background-color: var(--sage-primary);
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+
+    .music-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #B2BDB6;
+      transition: background-color 0.3s;
+    }
+
+    @keyframes pulseDot {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
+    }
+
+    /* ==========================================================================
+       3. SISTEM FASE LAYAR (LAYAR 0, 1, 2)
+       ========================================================================== */
+    .screen {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .screen.hidden {
+      display: none !important;
+    }
+
+    .screen.fade-out {
+      opacity: 0;
+      transform: translateY(-16px) scale(0.98);
+      pointer-events: none;
+    }
+
+    .screen.fade-in {
+      animation: screenEnter 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes screenEnter {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ==========================================================================
+       4. DETAIL LAYAR 0: COVER DENGAN FOTO ASLI & CROP PRESISI
+       ========================================================================== */
+    #screen-0 {
+      text-align: center;
+      padding: 1.2rem 1rem 2rem 1rem;
+      cursor: pointer;
+      margin: auto 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(82vh - 60px);
+    }
+
+    /* Container Frame Foto Lengkung Estetik (Classic Arched Portrait) */
+    .portrait-frame-container {
+      position: relative;
+      margin: 0.5rem auto 0.8rem auto;
+      display: inline-block;
+      user-select: none;
+      animation: gentleFloat 6s ease-in-out infinite;
+    }
+
+    .portrait-photo-arch {
+      width: 210px;
+      height: 280px;
+      border-radius: 105px 105px 24px 24px;
+      background: #FAF8F5;
+      border: 4.5px solid #FFFFFF;
+      box-shadow: 0 20px 45px -10px rgba(52, 78, 65, 0.22), 0 0 0 1px rgba(163, 177, 138, 0.35);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .portrait-frame-container:hover .portrait-photo-arch {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 24px 50px -10px rgba(52, 78, 65, 0.28);
+    }
+
+    /* Foto Asli Pengguna - Terkunci Permanen, Murni Tanpa Filter / Tanpa AI */
+    .portrait-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      filter: none !important;
+      transform: none !important;
+    }
+
+    /* Badge Elegan Terkunci di Sudut Foto */
+    .portrait-badge {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      background: #FFFFFF;
+      border: 1px solid rgba(88, 129, 87, 0.25);
+      box-shadow: 0 6px 18px rgba(52, 78, 65, 0.16);
+      border-radius: 9999px;
+      padding: 0.32rem 0.8rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--sage-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .badge-sparkle {
+      font-size: 0.85rem;
+    }
+
+    .cover-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--sage-dark);
+      letter-spacing: 0.015em;
+      line-height: 1.38;
+      margin-bottom: 0.75rem;
+    }
+
+    .cover-action-card {
+      margin-top: 1.5rem;
+      padding: 1.1rem 1.6rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-soft);
+      border-radius: 20px;
+      box-shadow: var(--shadow-warm);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .cover-action-card:hover {
+      transform: translateY(-2px);
+      background: #FFFFFF;
+      box-shadow: 0 20px 40px -10px rgba(52, 78, 65, 0.18);
+    }
+
+    .cover-action-card:active {
+      transform: scale(0.97);
+    }
+
+    .cover-prompt-text {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--warm-clay);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .cover-subprompt {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .tap-hand {
+      display: inline-block;
+      animation: tapPulse 1.8s infinite ease-in-out;
+    }
+
+    /* ==========================================================================
+       5. DETAIL LAYAR 1: BAIT PUISI DENGAN ANIMASI BERTAHAP
+       ========================================================================== */
+    #screen-1 {
+      text-align: center;
+      width: 100%;
+      padding: 1.5rem 0.5rem;
+    }
+
+    .poem-header {
+      margin-bottom: 2.2rem;
+    }
+
+    .poem-badge {
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sage-primary);
+      background: rgba(163, 177, 138, 0.22);
+      padding: 0.35rem 0.9rem;
+      border-radius: 9999px;
+      margin-bottom: 0.6rem;
+    }
+
+    .poem-main-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--sage-dark);
+      font-style: italic;
+    }
+
+    .poem-leaves-decor {
+      font-size: 1.1rem;
+      color: var(--sage-light);
+      margin-top: 0.25rem;
+    }
+
+    .poem-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.65rem;
+      width: 100%;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Bait Puisi: Setiap 2 baris dibungkus ke dalam tag terpisah */
+    .poem-stanza {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.02rem;
+      line-height: 1.75;
+      color: var(--text-main);
+      padding: 0.95rem 1.15rem;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 14px;
+      border: 1px solid rgba(88, 129, 87, 0.08);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .poem-stanza.stanza-active {
+      opacity: 1;
+      transform: translateY(0);
+      background: rgba(255, 255, 255, 0.72);
+      border-color: rgba(88, 129, 87, 0.16);
+      box-shadow: 0 6px 20px -4px rgba(52, 78, 65, 0.08);
+    }
+
+    .poem-stanza p {
+      margin: 0;
+    }
+
+    .poem-stanza.highlight-stanza.stanza-active {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(201, 138, 125, 0.35);
+      box-shadow: 0 10px 28px -6px rgba(176, 125, 98, 0.18);
+    }
+
+    .poem-stanza.highlight-stanza .birthday-wish {
+      color: var(--warm-clay);
+      font-weight: 600;
+      font-size: 1.06rem;
+      display: block;
+      margin-top: 0.35rem;
+    }
+
+    /* Animasi Kata per Kata (Word-by-Word Animation) */
+    .poem-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+      filter: blur(3px);
+      transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.32s ease-out;
+      will-change: opacity, transform, filter;
+    }
+
+    .poem-word.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    /* Petunjuk Ketuk Cepat untuk Menampilkan Semua */
+    .poem-skip-hint {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.73rem;
+      color: var(--sage-muted);
+      margin-top: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .poem-skip-hint.visible {
+      opacity: 0.85;
+    }
+
+    /* Tombol Buka Kejutan Selanjutnya - Tampil Setelah Kata Terakhir */
+    .next-surprise-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, var(--sage-primary) 0%, var(--sage-dark) 100%);
+      padding: 1rem 1.85rem;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px -5px rgba(52, 78, 65, 0.35);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      opacity: 0;
+      transform: translateY(18px);
+      pointer-events: none;
+    }
+
+    .next-surprise-btn.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      animation: gentlePulseBtn 2.4s infinite ease-in-out;
+    }
+
+    @keyframes gentlePulseBtn {
+
+      0%,
+      100% {
+        box-shadow: 0 10px 24px -5px rgba(52, 78, 65, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 14px 30px -2px rgba(88, 129, 87, 0.52);
+      }
+    }
+
+    .next-surprise-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -4px rgba(52, 78, 65, 0.42);
+      background: linear-gradient(135deg, #648f63 0%, #3e5a4b 100%);
+    }
+
+    .next-surprise-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ==========================================================================
+       6. DETAIL LAYAR 2: HALAMAN VIDEO BERMAIN GITAR & PESAN TULUS
+       ========================================================================== */
+    #screen-2 {
+      text-align: center;
+      width: 100%;
+      padding: 1rem 0;
+    }
+
+    .video-header-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--sage-dark);
+      margin-bottom: 1.35rem;
+      line-height: 1.55;
+      padding: 0 0.8rem;
+    }
+
+    .video-card-wrapper {
+      width: 94%;
+      max-width: 400px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 0.85rem;
+      box-shadow: 0 18px 45px -10px rgba(52, 78, 65, 0.18);
+      border: 1px solid var(--border-soft);
+      position: relative;
+    }
+
+    /* Video Player Responsif (width 90%+, border-radius) */
+    .guitar-video-player {
+      width: 100%;
+      display: block;
+      border-radius: 16px;
+      background-color: #1A2420;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      outline: none;
+    }
+
+    .video-subcaption-card {
+      margin: 1.5rem auto 0 auto;
+      width: 94%;
+      max-width: 400px;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.96rem;
+      color: var(--text-main);
+      line-height: 1.75;
+      padding: 1.15rem 1.25rem;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      border: 1px solid rgba(88, 129, 87, 0.14);
+      box-shadow: 0 6px 20px -6px rgba(52, 78, 65, 0.08);
+      text-align: left;
+    }
+
+    .video-subcaption-quote {
+      font-style: italic;
+      color: var(--sage-dark);
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .video-subcaption-note {
+      font-size: 0.9rem;
+      color: var(--warm-clay);
+      display: block;
+      font-style: italic;
+    }
+
+    .video-actions {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .replay-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--sage-dark);
+      background: rgba(163, 177, 138, 0.2);
+      border: 1px solid rgba(88, 129, 87, 0.2);
+      padding: 0.65rem 1.4rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .replay-btn:hover {
+      background: rgba(163, 177, 138, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* Pesan bantuan/fallback jika video belum diunggah */
+    .video-notice {
+      margin-top: 0.75rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.75rem;
+      color: var(--warm-clay);
+      background: rgba(201, 138, 125, 0.12);
+      padding: 0.5rem 0.85rem;
+      border-radius: 10px;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       7. UTILITY & KEYFRAME ANIMASI
+       ========================================================================== */
+    @keyframes gentleFloat {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    @keyframes slowRotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes tapPulse {
+
+      0%,
+      100% {
+        transform: scale(1) translateY(0);
+      }
+
+      50% {
+        transform: scale(1.15) translateY(-3px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Audio Latar Belakang (Sesuai Spesifikasi) -->
+  <audio id="bg-music" src="backsound.mp3" loop></audio>
+
+  <!-- Kanvas Latar Daun Berguguran Lembut -->
+  <canvas id="leaves-canvas"></canvas>
+
+  <!-- Smartphone Mobile-First Viewport Frame -->
+  <main class="phone-container" role="main">
+
+    <!-- ======================================================================
+         HEADER ELEGAN (Sticky Bar dengan Monogram, Indikator Fase, & Musik)
+         ====================================================================== -->
+    <header id="app-header" class="app-header" aria-label="Header Aplikasi">
+      <div class="header-brand-wrap">
+        <div class="header-monogram" aria-hidden="true">
+          <span>🌿</span>
+        </div>
+        <div class="header-text-block">
+          <span class="header-title">Hari Bahagiamu</span>
+          <span id="header-phase-text" class="header-phase-tag">Pesan Pembuka</span>
+        </div>
+      </div>
+
+      <!-- Tombol Indikator / Mute Musik Latar Terintegrasi Rapi di Header -->
+      <button id="music-pill-btn" class="music-pill" aria-label="Toggle Musik" type="button">
+        <span class="music-dot"></span>
+        <span id="music-pill-label">Musik Aktif</span>
+      </button>
+    </header>
+
+    <!-- ======================================================================
+         LAYAR 0: COVER / INTERAKSI PERTAMA (Solusi Kebijakan Autoplay Browser)
+         ====================================================================== -->
+    <section id="screen-0" class="screen" aria-label="Layar Pembuka">
+
+      <!-- Frame Foto Asli Pengguna (Terkunci Permanen, 100% Original Murni) -->
+      <div class="portrait-frame-container" id="portrait-frame-wrap">
+        <div class="portrait-photo-arch" id="portrait-photo-arch">
+          <img id="user-portrait-img" class="portrait-photo-img" src="foto-saya.jpg" alt="Foto Hari Bahagia"
+            referrerpolicy="no-referrer" />
+        </div>
+
+        <!-- Badge Elegan di Sudut Foto -->
+        <div class="portrait-badge" id="portrait-badge" aria-hidden="true">
+          <span class="badge-sparkle">✨</span>
+          <span>Hari Spesial</span>
+        </div>
+      </div>
+
+      <h1 class="cover-title">Hadiah kecil<br>di hari yang besar buat kamuuu</h1>
+
+      <!-- Tombol/Area Ketuk di Tengah Layar Sesuai Spesifikasi -->
+      <div id="start-touch-area" class="cover-action-card" role="button" tabindex="0">
+        <span class="cover-prompt-text">"Ada pesan untukmu..."</span>
+        <span class="cover-subprompt">
+          <span class="tap-hand">👆</span> (Ketuk untuk membuka)
+        </span>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         LAYAR 1: HALAMAN PUISI LINKAR WAKTU DENGAN ANIMASI KATA PER KATA
+         ====================================================================== -->
+    <section id="screen-1" class="screen hidden" aria-label="Halaman Puisi Linkar Waktu">
+      <header class="poem-header">
+        <span class="poem-badge">Babak Pertama</span>
+        <h2 class="poem-main-title">Linkar Waktu</h2>
+        <div class="poem-leaves-decor" aria-hidden="true">❦ ❦ ❦</div>
+      </header>
+
+      <!-- Setiap bait puisi dibungkus ke dalam tag div terpisah -->
+      <div class="poem-container">
+        <!-- Bait 1: Delay 0s (muncul langsung) -->
+        <div class="poem-stanza stanza-1">
+          <p>Hari ini lingkar usiamu nambah satu lagi,</p>
+          <p>Ngerangkum semua lelah, rindu, dan rasa bimbang yang sempet kita lewatin.</p>
+        </div>
+
+        <!-- Bait 2: Delay 2.5s -->
+        <div class="poem-stanza stanza-2">
+          <p>Semoga di usiamu yang baru ini, hari-hari kamu terasa lebih hangat,</p>
+          <p>Ngeredain semua cemas kamu, biar akar kamu makin kuat.</p>
+        </div>
+
+        <!-- Bait 3: Delay 5.0s -->
+        <div class="poem-stanza stanza-3">
+          <p>Tumbuh pelan-pelan aja ya, nggak usah buru-buru.</p>
+          <p>Kalau nanti ada masa-masa yang bikin langkahmu ragu,</p>
+        </div>
+
+        <!-- Bait 4: Delay 7.5s -->
+        <div class="poem-stanza stanza-4">
+          <p>Inget yaaah,... kamu nggak perlu nanggung semuanya sendirian lagi.</p>
+          <p>Kan ada aku di sini, yang bakal jagain biar daun kamu nggak berguguran.</p>
+        </div>
+
+        <!-- Bait 5: Delay 10.0s -->
+        <div class="poem-stanza stanza-5 highlight-stanza">
+          <p>Selamat ulang tahun, sayang. Teruslah bertumbuh dengan baik bareng-bareng sama aku.</p>
+          <p class="birthday-wish">Dan kalau suatu saat isi kepalamu lagi berisik atau hatimu lagi merasa bimbang...</p>
+        </div>
+      </div>
+
+      <!-- Tombol Kejutan Muncul Paling Akhir -->
+      <button id="to-screen-2-btn" class="next-surprise-btn" type="button">
+        Coba dengerin ini ➔
+      </button>
+
+      <!-- Petunjuk Halus saat teks sedang ditulis kata per kata -->
+      <div id="poem-skip-hint" class="poem-skip-hint" title="Klik untuk menampilkan seluruh kata sekaligus">
+        Ketuk layar untuk menampilkan semua ⚡
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         LAYAR 2: HALAMAN VIDEO & PESAN TULUS
+         ====================================================================== -->
+    <section id="screen-2" class="screen hidden" aria-label="Halaman Video Khusus">
+      <!-- Teks Pembuka Video -->
+      <h2 class="video-header-text">"Aku memainkan lagu ini khusus buat kamu..."</h2>
+
+      <!-- Pemutar Video HTML5 Responsif (width 90%+, border-radius) -->
+      <div class="video-card-wrapper">
+        <video id="guitar-video" class="guitar-video-player" controls preload="metadata"
+          poster="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=700&q=80">
+          <source src="video-gitar.mp4" type="video/mp4">
+          Browser Anda tidak mendukung tag video HTML5.
+        </video>
+
+        <!-- Informasi Penjelas bila berkas video pengguna disiapkan -->
+        <div id="video-fallback-msg" class="video-notice" style="display: none;">
+          💡 <em>Tips:</em> Letakkan berkas video Anda dengan nama <code>video-gitar.mp4</code> di folder yang sama
+          untuk memutar video rekaman pribadi Anda.
+        </div>
+      </div>
+
+      <!-- Pesan Tulus Sesuai Permintaan di Layar 2 -->
+      <div class="video-subcaption-card">
+        <p class="video-subcaption-quote">
+          "kamu bisa cerita dari hal kecil sampai hal berat dan aku dengrin segala ke over thinking an kamuu dan aku
+          berharap kamu jadi pribadi yang lebih baik lagi.
+        </p>
+        <p class="video-subcaption-note">
+          maaf yaah walau suaraku aga fales tapi semoga kamu menikmati"
+        </p>
+      </div>
+
+      <div class="video-actions">
+        <button id="replay-all-btn" class="replay-btn" type="button">
+          <span>↺</span> Baca Ulang Pesan dari Awal
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       8. LOGIKA JAVASCRIPT: PENGENDALIAN MUSIK, ANIMASI, & TRANSISI MULUS
+       ========================================================================== -->
+  <script>
+    // ========================================================================
+    // A. INISIALISASI ELEMEN DOM
+    // ========================================================================
+    const bgMusic = document.getElementById('bg-music');
+    const screen0 = document.getElementById('screen-0');
+    const screen1 = document.getElementById('screen-1');
+    const screen2 = document.getElementById('screen-2');
+    const startTouchArea = document.getElementById('start-touch-area');
+    const toScreen2Btn = document.getElementById('to-screen-2-btn');
+    const replayAllBtn = document.getElementById('replay-all-btn');
+    const guitarVideo = document.getElementById('guitar-video');
+    const musicPill = document.getElementById('music-pill-btn');
+    const musicPillLabel = document.getElementById('music-pill-label');
+    const videoFallbackMsg = document.getElementById('video-fallback-msg');
+    const headerPhaseText = document.getElementById('header-phase-text');
+    const userPortraitImg = document.getElementById('user-portrait-img');
+    const portraitBadge = document.getElementById('portrait-badge');
+
+    // ========================================================================
+    // KUNCI DAN MUAT FOTO ASLI PERMANEN
+    // ========================================================================
+    try {
+      const savedRealPhoto = localStorage.getItem('birthday_real_photo');
+      if (savedRealPhoto && (savedRealPhoto.startsWith('data:image/') || savedRealPhoto.startsWith('blob:') || savedRealPhoto.startsWith('http'))) {
+        if (userPortraitImg) {
+          userPortraitImg.src = savedRealPhoto;
+        }
+        // Kirim sinkronisasi permanen ke server backend agar tersimpan sebagai file permanen
+        fetch('/api/lock-photo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: savedRealPhoto })
+        }).catch(() => { });
+      } else if (userPortraitImg) {
+        userPortraitImg.src = 'foto-saya.jpg';
+      }
+    } catch (e) {
+      if (userPortraitImg) userPortraitImg.src = 'foto-saya.jpg';
+    }
+
+    let audioContext = null;
+    let synthLoopTimer = null;
+    let isSyntheticMusic = false;
+
+    // ========================================================================
+    // B. SISTEM INSTRUMEN PIANO HALUS (WEB AUDIO API)
+    // Synthesizer piano lembut bernuansa hangat, tenang, dan jernih
+    // Menghasilkan harmonisasi piano akustik yang menyejukkan hati.
+    // ========================================================================
+    function startWarmAcousticSynth() {
+      if (synthLoopTimer) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        audioContext = new AudioCtx();
+        isSyntheticMusic = true;
+
+        // Progresi akor piano romantis & menyejukkan (Dadd9 - A/C# - Bm7 - Gmaj7)
+        // Memakai frekuensi multi-harmonik khas senar piano
+        const pianoChords = [
+          // Dadd9: D3, A3, D4, F#4, E5
+          { bass: 146.83, notes: [220.00, 293.66, 369.99, 659.25] },
+          // A: A2, E3, A3, C#4, E4
+          { bass: 110.00, notes: [164.81, 220.00, 277.18, 329.63] },
+          // Bm7: B2, F#3, B3, D4, F#4
+          { bass: 123.47, notes: [185.00, 246.94, 293.66, 369.99] },
+          // Gmaj7: G2, D3, G3, B3, F#4
+          { bass: 98.00, notes: [146.83, 196.00, 246.94, 369.99] }
+        ];
+
+        let chordIdx = 0;
+
+        // Fungsi membunyikan satu nada piano dengan karakter hammer & damper decay
+        function playPianoTone(freq, delaySec, durationSec = 2.4, velocity = 0.08) {
+          if (!audioContext || audioContext.state === 'suspended') return;
+
+          const now = audioContext.currentTime + delaySec;
+
+          // Oscillator 1: Fundamental Sine (nada dasar empuk)
+          const oscFund = audioContext.createOscillator();
+          const gainFund = audioContext.createGain();
+          oscFund.type = 'sine';
+          oscFund.frequency.setValueAtTime(freq, now);
+
+          // Oscillator 2: Overtone Triangle (karakter resonansi dawai piano)
+          const oscOver = audioContext.createOscillator();
+          const gainOver = audioContext.createGain();
+          oscOver.type = 'triangle';
+          oscOver.frequency.setValueAtTime(freq * 2, now);
+
+          // Filter Lowpass untuk menghasilkan timbre piano yang halus dan warm (tidak menusuk)
+          const filter = audioContext.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(Math.min(freq * 3.2, 2200), now);
+          filter.frequency.exponentialRampToValueAtTime(Math.min(freq * 1.5, 800), now + durationSec);
+
+          // Envelope Gain Piano: Fast Attack (ketukan palu piano) lalu Decay bertahap
+          gainFund.gain.setValueAtTime(0.0001, now);
+          gainFund.gain.linearRampToValueAtTime(velocity, now + 0.025);
+          gainFund.gain.exponentialRampToValueAtTime(velocity * 0.45, now + 0.35);
+          gainFund.gain.exponentialRampToValueAtTime(0.0001, now + durationSec);
+
+          gainOver.gain.setValueAtTime(0.0001, now);
+          gainOver.gain.linearRampToValueAtTime(velocity * 0.3, now + 0.02);
+          gainOver.gain.exponentialRampToValueAtTime(0.0001, now + (durationSec * 0.65));
+
+          // Sambungkan rantai audio
+          oscFund.connect(gainFund);
+          oscOver.connect(gainOver);
+          gainFund.connect(filter);
+          gainOver.connect(filter);
+          filter.connect(audioContext.destination);
+
+          oscFund.start(now);
+          oscFund.stop(now + durationSec + 0.1);
+          oscOver.start(now);
+          oscOver.stop(now + durationSec + 0.1);
+        }
+
+        function playNextPianoPattern() {
+          if (!isSyntheticMusic) return;
+          const current = pianoChords[chordIdx];
+
+          // 1. Bass piano hangat di ketukan awal
+          playPianoTone(current.bass, 0, 3.2, 0.09);
+
+          // 2. Arpeggio piano mengalir lembut bertahap
+          playPianoTone(current.notes[0], 0.08, 2.6, 0.065);
+          playPianoTone(current.notes[1], 0.42, 2.4, 0.06);
+          playPianoTone(current.notes[2], 0.78, 2.3, 0.055);
+          playPianoTone(current.notes[3], 1.15, 2.2, 0.05);
+          playPianoTone(current.notes[1], 1.52, 2.0, 0.045);
+
+          chordIdx = (chordIdx + 1) % pianoChords.length;
+          synthLoopTimer = setTimeout(playNextPianoPattern, 1950);
+        }
+
+        playNextPianoPattern();
+      } catch (err) {
+        console.log('Piano Audio API initialized gracefully:', err);
+      }
+    }
+
+    function stopWarmAcousticSynth() {
+      isSyntheticMusic = false;
+      if (synthLoopTimer) {
+        clearTimeout(synthLoopTimer);
+        synthLoopTimer = null;
+      }
+      if (audioContext && audioContext.state !== 'closed') {
+        try {
+          audioContext.close();
+        } catch (e) { }
+      }
+    }
+
+    // Memutar musik dengan fail-safe mulus
+    function playBackgroundMusic() {
+      bgMusic.volume = 0.8;
+      const playPromise = bgMusic.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Berkas backsound.mp3 berhasil diputar
+            updateMusicPillState(true);
+          })
+          .catch((err) => {
+            console.warn("Berkas backsound.mp3 belum tersedia atau diblokir browser. Mengalunkan instrumen piano halus nan syahdu:", err);
+            startWarmAcousticSynth();
+            updateMusicPillState(true);
+          });
+      }
+
+      // Tampilkan tombol pill kontrol musik
+      musicPill.classList.add('visible');
+    }
+
+    // Fade-out musik perlahan (smooth volume reduction)
+    function fadeOutBackgroundMusic(durationMs = 1500) {
+      if (isSyntheticMusic) {
+        stopWarmAcousticSynth();
+        updateMusicPillState(false);
+        return;
+      }
+
+      if (!bgMusic || bgMusic.paused) return;
+
+      const stepTime = 50;
+      const stepCount = durationMs / stepTime;
+      const volumeStep = bgMusic.volume / stepCount;
+
+      const fadeInterval = setInterval(() => {
+        if (bgMusic.volume > volumeStep) {
+          bgMusic.volume = Math.max(0, bgMusic.volume - volumeStep);
+        } else {
+          bgMusic.volume = 0;
+          bgMusic.pause();
+          clearInterval(fadeInterval);
+          updateMusicPillState(false);
+        }
+      }, stepTime);
+    }
+
+    function updateMusicPillState(isPlaying) {
+      if (isPlaying) {
+        musicPill.classList.add('playing');
+        musicPillLabel.textContent = 'Musik Aktif';
+      } else {
+        musicPill.classList.remove('playing');
+        musicPillLabel.textContent = 'Musik Jeda';
+      }
+    }
+
+    // Toggle mute/unmute via tombol pill
+    musicPill.addEventListener('click', () => {
+      if (!bgMusic.paused) {
+        bgMusic.pause();
+        updateMusicPillState(false);
+      } else if (isSyntheticMusic && synthLoopTimer) {
+        stopWarmAcousticSynth();
+        updateMusicPillState(false);
+      } else {
+        bgMusic.volume = 0.8;
+        bgMusic.play().then(() => updateMusicPillState(true)).catch(() => {
+          startWarmAcousticSynth();
+          updateMusicPillState(true);
+        });
+      }
+    });
+
+    // ========================================================================
+    // C. ANIMASI KATA PER KATA (WORD-BY-WORD REVEAL ENGINE)
+    // ========================================================================
+    let poemWordAnimationTimeout = null;
+    let isAnimatingPoem = false;
+    let allPoemWords = [];
+    const poemSkipHint = document.getElementById('poem-skip-hint');
+
+    // Mempersiapkan setiap kata dalam bait puisi ke dalam tag <span> individu
+    function setupPoemWords() {
+      const stanzas = document.querySelectorAll('.poem-stanza');
+      allPoemWords = [];
+
+      stanzas.forEach((stanza, sIdx) => {
+        stanza.classList.remove('stanza-active');
+        const paragraphs = stanza.querySelectorAll('p');
+        paragraphs.forEach((p) => {
+          let originalText = p.getAttribute('data-original-text');
+          if (!originalText) {
+            originalText = p.textContent.trim();
+            p.setAttribute('data-original-text', originalText);
+          }
+          p.innerHTML = '';
+
+          const words = originalText.split(/\s+/);
+          words.forEach((word) => {
+            if (!word) return;
+            const span = document.createElement('span');
+            span.className = 'poem-word';
+            span.textContent = word;
+            p.appendChild(span);
+            p.appendChild(document.createTextNode(' '));
+            allPoemWords.push({ span, stanza, stanzaIndex: sIdx });
+          });
+        });
+      });
+    }
+
+    // Inisialisasi awal pemecahan kata saat skrip pertama kali dimuat
+    setupPoemWords();
+
+    function startWordByWordAnimation() {
+      if (poemWordAnimationTimeout) {
+        clearTimeout(poemWordAnimationTimeout);
+        poemWordAnimationTimeout = null;
+      }
+
+      if (allPoemWords.length === 0) {
+        setupPoemWords();
+      }
+
+      // Reset tampilan seluruh kata, kartu bait, dan tombol
+      allPoemWords.forEach(item => {
+        item.span.classList.remove('revealed');
+        item.stanza.classList.remove('stanza-active');
+      });
+      toScreen2Btn.classList.remove('revealed');
+
+      if (poemSkipHint) {
+        poemSkipHint.classList.add('visible');
+      }
+
+      isAnimatingPoem = true;
+      let wordIndex = 0;
+      let currentStanzaIdx = -1;
+
+      function revealNextWord() {
+        if (!isAnimatingPoem) return;
+
+        if (wordIndex >= allPoemWords.length) {
+          finishPoemAnimation();
+          return;
+        }
+
+        const currentWord = allPoemWords[wordIndex];
+
+        // Aktifkan kartu bait saat kata pertama pada bait tersebut muncul
+        if (currentWord.stanzaIndex !== currentStanzaIdx) {
+          currentStanzaIdx = currentWord.stanzaIndex;
+          currentWord.stanza.classList.add('stanza-active');
+
+          // Auto-scroll halus agar bait yang sedang aktif senantiasa nyaman dibaca di layar HP & PC
+          const container = document.querySelector('.phone-container');
+          if (container) {
+            const stanzaRect = currentWord.stanza.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            if (stanzaRect.bottom > containerRect.bottom - 40) {
+              container.scrollBy({ top: stanzaRect.height + 25, behavior: 'smooth' });
+            }
+          }
+        }
+
+        currentWord.span.classList.add('revealed');
+        wordIndex++;
+
+        // Delay dinamis: irama membaca alami & syahdu (~85ms - 105ms)
+        // Jeda lebih panjang pada koma dan tanda baca akhir
+        let delay = 92;
+        const text = currentWord.span.textContent;
+        if (text.endsWith('.') || text.endsWith('...')) {
+          delay = 320;
+        } else if (text.endsWith(',')) {
+          delay = 185;
+        }
+
+        poemWordAnimationTimeout = setTimeout(revealNextWord, delay);
+      }
+
+      // Mulai penulisan kata pertama setelah transisi layar selesai dibuka
+      poemWordAnimationTimeout = setTimeout(revealNextWord, 300);
+    }
+
+    function finishPoemAnimation() {
+      if (poemWordAnimationTimeout) {
+        clearTimeout(poemWordAnimationTimeout);
+        poemWordAnimationTimeout = null;
+      }
+      isAnimatingPoem = false;
+
+      // Munculkan semua kata dan aktifkan semua bait secara instan
+      const stanzas = document.querySelectorAll('.poem-stanza');
+      stanzas.forEach(s => s.classList.add('stanza-active'));
+      allPoemWords.forEach(item => item.span.classList.add('revealed'));
+
+      // Tampilkan tombol kejutan selanjutnya
+      toScreen2Btn.classList.add('revealed');
+
+      if (poemSkipHint) {
+        poemSkipHint.classList.remove('visible');
+      }
+
+      // Scroll halus ke tombol agar mudah diklik
+      setTimeout(() => {
+        const container = document.querySelector('.phone-container');
+        if (container) {
+          const btnRect = toScreen2Btn.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          if (btnRect.bottom > containerRect.bottom) {
+            toScreen2Btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }
+      }, 150);
+    }
+
+    // Ketukan pada Layar 1 saat animasi sedang berjalan akan langsung menampilkan semua kata
+    screen1.addEventListener('click', (e) => {
+      if (e.target.closest('#to-screen-2-btn')) return;
+      if (isAnimatingPoem) {
+        finishPoemAnimation();
+      }
+    });
+
+    // ========================================================================
+    // D. TRANSISI ANTAR LAYAR (LAYAR 0 -> LAYAR 1 -> LAYAR 2)
+    // ========================================================================
+
+    // 1. TRANSISI: LAYAR 0 KE LAYAR 1
+    // Terjadi saat layar cover diketuk/ditekan
+    function handleScreen0ToScreen1() {
+      // Putar musik latar instrumen piano
+      playBackgroundMusic();
+
+      // Fade-out Layar 0 dengan efek lembut
+      screen0.classList.add('fade-out');
+
+      setTimeout(() => {
+        screen0.classList.add('hidden');
+        screen0.classList.remove('fade-out');
+
+        // Munculkan Layar 1
+        screen1.classList.remove('hidden');
+        screen1.classList.add('fade-in');
+        if (headerPhaseText) headerPhaseText.textContent = "Linkar Waktu";
+
+        // Scroll ke atas container
+        document.querySelector('.phone-container').scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Mulai animasi kata per kata yang puitis dan mengalir
+        startWordByWordAnimation();
+      }, 900);
+    }
+
+    startTouchArea.addEventListener('click', handleScreen0ToScreen1);
+    screen0.addEventListener('click', () => {
+      handleScreen0ToScreen1();
+    });
+
+    // 2. TRANSISI: LAYAR 1 KE LAYAR 2
+    // Terjadi saat tombol "Coba dengerin ini ➔" ditekan
+    toScreen2Btn.addEventListener('click', () => {
+      // Musik latar mengecil perlahan (fade-out audio) agar suara video gitar terdengar jelas
+      fadeOutBackgroundMusic(1200);
+
+      // Fade-out Layar 1
+      screen1.classList.add('fade-out');
+
+      setTimeout(() => {
+        screen1.classList.add('hidden');
+        screen1.classList.remove('fade-out');
+
+        // Munculkan Layar 2
+        screen2.classList.remove('hidden');
+        screen2.classList.add('fade-in');
+        if (headerPhaseText) headerPhaseText.textContent = "Video Spesial";
+
+        // Scroll kembali ke atas
+        document.querySelector('.phone-container').scrollTo({ top: 0, behavior: 'smooth' });
+      }, 900);
+    });
+
+    // Deteksi video error untuk memberi petunjuk ramah kepada pembuat web
+    guitarVideo.addEventListener('error', () => {
+      videoFallbackMsg.style.display = 'block';
+    });
+
+    // 3. FITUR PUTAR ULANG DARI AWAL
+    replayAllBtn.addEventListener('click', () => {
+      // Hentikan video jika sedang berputar
+      if (!guitarVideo.paused) {
+        guitarVideo.pause();
+      }
+
+      screen2.classList.add('fade-out');
+      setTimeout(() => {
+        screen2.classList.add('hidden');
+        screen2.classList.remove('fade-out');
+
+        // Reset dan tampilkan kembali Layar 0
+        screen0.classList.remove('hidden');
+        screen0.classList.add('fade-in');
+        if (headerPhaseText) headerPhaseText.textContent = "Pesan Pembuka";
+
+        // Reset status animasi kata per kata
+        if (poemWordAnimationTimeout) {
+          clearTimeout(poemWordAnimationTimeout);
+          poemWordAnimationTimeout = null;
+        }
+        isAnimatingPoem = false;
+        allPoemWords.forEach(item => {
+          item.span.classList.remove('revealed');
+          item.stanza.classList.remove('stanza-active');
+        });
+        toScreen2Btn.classList.remove('revealed');
+        if (poemSkipHint) poemSkipHint.classList.remove('visible');
+
+        document.querySelector('.phone-container').scrollTo({ top: 0, behavior: 'smooth' });
+      }, 600);
+    });
+
+    // ========================================================================
+    // D. KANVAS DAUN & PARTIKEL ALAM BERGUGURAN (EARTHY AESTHETIC)
+    // ========================================================================
+    (function initLeavesCanvas() {
+      const canvas = document.getElementById('leaves-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Partikel daun bernuansa sage & earthy pastel
+      const colors = ['#A3B18A', '#8A9A86', '#B7C4B0', '#D4A373', '#C98A7D'];
+      const leafCount = Math.min(24, Math.floor(window.innerWidth / 30));
+      const leaves = [];
+
+      for (let i = 0; i < leafCount; i++) {
+        leaves.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: Math.random() * 8 + 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedY: Math.random() * 0.7 + 0.4,
+          speedX: Math.random() * 0.6 - 0.3,
+          angle: Math.random() * Math.PI * 2,
+          angularSpeed: (Math.random() - 0.5) * 0.02,
+          opacity: Math.random() * 0.4 + 0.25
+        });
+      }
+
+      function drawLeaf(x, y, size, angle, color, opacity) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.globalAlpha = opacity;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        // Bentuk daun lonjong lembut
+        ctx.ellipse(0, 0, size, size * 0.45, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        leaves.forEach(leaf => {
+          leaf.y += leaf.speedY;
+          leaf.x += Math.sin(leaf.angle) * 0.5 + leaf.speedX;
+          leaf.angle += leaf.angularSpeed;
+
+          if (leaf.y > height + 20) {
+            leaf.y = -20;
+            leaf.x = Math.random() * width;
+          }
+          if (leaf.x > width + 20) leaf.x = -20;
+          if (leaf.x < -20) leaf.x = width + 20;
+
+          drawLeaf(leaf.x, leaf.y, leaf.size, leaf.angle, leaf.color, leaf.opacity);
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
+  </script>
+</body>
+
+</html>
