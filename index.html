@@ -1360,6 +1360,11 @@
       videoFallbackMsg.style.display = 'block';
     });
 
+    // Pastikan musik latar mati saat video diputar (berjaga-jaga jika dinyalakan manual)
+    guitarVideo.addEventListener('play', () => {
+      fadeOutBackgroundMusic(500);
+    });
+
     // 3. FITUR PUTAR ULANG DARI AWAL
     replayAllBtn.addEventListener('click', () => {
       // Hentikan video jika sedang berputar
