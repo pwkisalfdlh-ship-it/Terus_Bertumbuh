@@ -755,7 +755,7 @@
 <body>
 
   <!-- Audio Latar Belakang (Sesuai Spesifikasi) -->
-  <audio id="bg-music" src="backsound.mp3" loop></audio>
+  <audio id="bg-music" src="audio.mpeg" loop></audio>
 
   <!-- Kanvas Latar Daun Berguguran Lembut -->
   <canvas id="leaves-canvas"></canvas>
@@ -879,7 +879,7 @@
       <div class="video-card-wrapper">
         <video id="guitar-video" class="guitar-video-player" controls preload="metadata"
           poster="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=700&q=80">
-          <source src="video-gitar.mp4" type="video/mp4">
+          <source src="coverrr.mp4" type="video/mp4">
           Browser Anda tidak mendukung tag video HTML5.
         </video>
 
@@ -1072,17 +1072,17 @@
 
     // Memutar musik dengan fail-safe mulus
     function playBackgroundMusic() {
-      bgMusic.volume = 0.8;
+      bgMusic.volume = 0.35;
       const playPromise = bgMusic.play();
 
       if (playPromise !== undefined) {
         playPromise
-          .then(() => {
-            // Berkas backsound.mp3 berhasil diputar
+          .then(_ => {
+            // Berkas audio.mpeg berhasil diputar
             updateMusicPillState(true);
           })
-          .catch((err) => {
-            console.warn("Berkas backsound.mp3 belum tersedia atau diblokir browser. Mengalunkan instrumen piano halus nan syahdu:", err);
+          .catch(err => {
+            console.warn("Berkas audio.mpeg belum tersedia atau diblokir browser. Mengalunkan instrumen piano halus nan syahdu:", err);
             startWarmAcousticSynth();
             updateMusicPillState(true);
           });
@@ -1463,6 +1463,23 @@
 
       animate();
     })();
+    // Coba putar musik sejak awal halaman dimuat
+    window.addEventListener('load', () => {
+      playBackgroundMusic();
+    });
+
+    // Fallback jika autoplay diblokir browser: Putar saat ada sentuhan pertama di mana saja
+    const initMusicOnInteraction = () => {
+      if (bgMusic.paused) {
+        playBackgroundMusic();
+      }
+      document.removeEventListener('click', initMusicOnInteraction);
+      document.removeEventListener('touchstart', initMusicOnInteraction);
+    };
+    
+    document.addEventListener('click', initMusicOnInteraction);
+    document.addEventListener('touchstart', initMusicOnInteraction);
+
   </script>
 </body>
 
