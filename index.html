@@ -716,6 +716,79 @@
     /* ==========================================================================
        7. UTILITY & KEYFRAME ANIMASI
        ========================================================================== */
+
+    /* ===== HALAMAN 3: JAM TANGAN ===== */
+    .watch-gift-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      padding-top: 0.5rem;
+    }
+
+    .watch-meaning-card {
+      width: 94%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(88, 129, 87, 0.15);
+      border-radius: 20px;
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 6px 20px -6px rgba(52, 78, 65, 0.10);
+      text-align: center;
+    }
+
+    .watch-meaning-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage-mid);
+      margin-bottom: 0.85rem;
+    }
+
+    .watch-meaning-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1rem;
+      color: var(--text-main);
+      line-height: 1.85;
+      font-style: italic;
+    }
+
+    .watch-poem-card {
+      width: 94%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(88, 129, 87, 0.12);
+      border-radius: 20px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .watch-poem-stanza {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.97rem;
+      color: var(--text-main);
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .watch-poem-stanza p {
+      margin: 0;
+    }
+
+    .watch-poem-sign {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      color: var(--sage-dark);
+      text-align: center;
+      font-style: italic;
+      margin-top: 0.25rem;
+    }
+
     @keyframes gentleFloat {
 
       0%,
@@ -756,6 +829,8 @@
 
   <!-- Audio Latar Belakang (Sesuai Spesifikasi) -->
   <audio id="bg-music" src="audio.mpeg" loop></audio>
+  <!-- Audio Rekaman Suara Puisi (Untuk Sinkronisasi) -->
+  <audio id="voice-poem"></audio>
 
   <!-- Kanvas Latar Daun Berguguran Lembut -->
   <canvas id="leaves-canvas"></canvas>
@@ -804,6 +879,11 @@
       </div>
 
       <h1 class="cover-title">Hadiah kecil<br>di hari yang besar buat kamuuu</h1>
+
+      <!-- Petunjuk Headset -->
+      <p class="headset-hint" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; color: var(--sage-dark); text-align: center; max-width: 85%; margin: -0.5rem auto 1.5rem auto; line-height: 1.5; font-style: italic; background: rgba(255,255,255,0.4); padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid rgba(88,129,87,0.15);">
+        Sebelum membuka halaman berikutnya, coba pakai headset dulu ya. Ada sesuatu yang ingin aku sampaikan lewat suara. 🎧
+      </p>
 
       <!-- Tombol/Area Ketuk di Tengah Layar Sesuai Spesifikasi -->
       <div id="start-touch-area" class="cover-action-card" role="button" tabindex="0">
@@ -873,7 +953,7 @@
          ====================================================================== -->
     <section id="screen-2" class="screen hidden" aria-label="Halaman Video Khusus">
       <!-- Teks Pembuka Video -->
-      <h2 class="video-header-text">"Aku mainin lagu ini buat kamu sayaaaang..."</h2>
+      <h2 class="video-header-text">"Aku mainin lagu ini khusus buat kamu ..."</h2>
 
       <!-- Pemutar Video HTML5 Responsif (width 90%+, border-radius) -->
       <div class="video-card-wrapper">
@@ -893,8 +973,8 @@
       <!-- Pesan Tulus Sesuai Permintaan di Layar 2 -->
       <div class="video-subcaption-card">
         <p class="video-subcaption-quote">
-          "kamu bisa cerita dari hal kecil sampai hal berat dan aku dengrin segala ke over thinking an kamuu dan aku
-          berharap kamu jadi pribadi yang lebih baik lagi.
+          "makasih udaaah jadi orang hebat , makasih udah berusaha jadi penyabar , makasih udah usaha jadi lebih baik
+          lagi , aku ga bakal bosen ucapin ini, makasih makasih makasih."
         </p>
         <p class="video-subcaption-note">
           maaf yaah walau suaraku aga fales tapi semoga kamu menikmati"
@@ -902,8 +982,50 @@
       </div>
 
       <div class="video-actions">
+        <button id="to-screen-3-btn" class="next-surprise-btn revealed" type="button">
+          Ada satu hal lagi buat kamu ➔
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         LAYAR 3: HALAMAN HADIAH JAM TANGAN
+         ====================================================================== -->
+    <section id="screen-3" class="screen hidden" aria-label="Halaman Hadiah Jam Tangan">
+      <header class="poem-header">
+        <span class="poem-badge">Babak Terakhir</span>
+        <h2 class="poem-main-title">Satu Lagi Buat Kamu</h2>
+        <div class="poem-leaves-decor" aria-hidden="true">⌚ ✨ ⌚</div>
+      </header>
+
+      <div class="watch-gift-container">
+
+        <!-- Makna Jam Tangan -->
+        <div class="watch-meaning-card">
+          <p class="watch-meaning-label">Makna di balik hadiah ini</p>
+          <p class="watch-meaning-text">
+            Jam tangan ini mungkin cuma buat lihat waktu, sayang.<br>
+            Tapi aku berharap, setiap kali kamu ngeliatnya, kamu juga ingat kalau ada seseorang yang selalu ingin ada di
+            setiap langkah dan waktu yang kamu jalani lebih baik lagi setiap saat.
+          </p>
+        </div>
+
+        <!-- Puisi Penutup -->
+        <div class="watch-poem-card">
+          <div class="watch-poem-stanza">
+            <p>Waktu akan terus berjalan dan nggak bisa kita ulang. Karena itu, aku ingin menikmati sebanyak mungkin
+              waktu yang masih kita punya, terutama waktu yang bisa kita habiskan bersama.</p>
+          </div>
+          <div class="watch-poem-stanza">
+            <p>Semoga setiap detik yang berjalan di jam ini selalu mengingatkan kamu pada hal sederhana: bahwa kamu
+              berarti, dan selalu ada yang mendoakan hal-hal baik untukmu.</p>
+          </div>
+          <p class="watch-poem-sign">— untuk sayaang kuu Lia Kusuma, di hari yang baru ini 🤍</p>
+        </div>
+
+        <!-- Tombol Putar Ulang -->
         <button id="replay-all-btn" class="replay-btn" type="button">
-          <span>↺</span> Baca Ulang Pesan dari Awal
+          <span>↺</span> Baca Ulang dari Awal
         </button>
       </div>
     </section>
@@ -921,8 +1043,10 @@
     const screen0 = document.getElementById('screen-0');
     const screen1 = document.getElementById('screen-1');
     const screen2 = document.getElementById('screen-2');
+    const screen3 = document.getElementById('screen-3');
     const startTouchArea = document.getElementById('start-touch-area');
     const toScreen2Btn = document.getElementById('to-screen-2-btn');
+    const toScreen3Btn = document.getElementById('to-screen-3-btn');
     const replayAllBtn = document.getElementById('replay-all-btn');
     const guitarVideo = document.getElementById('guitar-video');
     const musicPill = document.getElementById('music-pill-btn');
@@ -1070,9 +1194,17 @@
       }
     }
 
+    // ========================================================================
+    // KONFIGURASI AUDIO (MIXING PROFESIONAL)
+    // Standar Voice-Over: Suara vokal harus sangat mendominasi (95%),
+    // sementara musik latar hanya menjadi pengiring tipis/bed (7%).
+    // ========================================================================
+    const MIX_BGM_VOLUME = 0.07;    // 7% - Dikuatkan agar musik latar lebih terasa
+    const MIX_VOICE_VOLUME = 0.95;  // 95% - Vokal utama, tidak 100% untuk mencegah pecah (clipping)
+
     // Memutar musik dengan fail-safe mulus
     function playBackgroundMusic() {
-      bgMusic.volume = 0.35;
+      bgMusic.volume = MIX_BGM_VOLUME;
       const playPromise = bgMusic.play();
 
       if (playPromise !== undefined) {
@@ -1130,19 +1262,8 @@
 
     // Toggle mute/unmute via tombol pill
     musicPill.addEventListener('click', () => {
-      if (!bgMusic.paused) {
-        bgMusic.pause();
-        updateMusicPillState(false);
-      } else if (isSyntheticMusic && synthLoopTimer) {
-        stopWarmAcousticSynth();
-        updateMusicPillState(false);
-      } else {
-        bgMusic.volume = 0.8;
-        bgMusic.play().then(() => updateMusicPillState(true)).catch(() => {
-          startWarmAcousticSynth();
-          updateMusicPillState(true);
-        });
-      }
+      // Musik dikunci di halaman puisi, pengguna tidak bisa mematikannya secara manual
+      return;
     });
 
     // ========================================================================
@@ -1186,6 +1307,76 @@
     // Inisialisasi awal pemecahan kata saat skrip pertama kali dimuat
     setupPoemWords();
 
+    const audioFiles = [
+      "bait audio/Bait 1.mp4",
+      "bait audio/bait 2.mp4",
+      "bait audio/bait 3.mp4",
+      "bait audio/bait 4.mp4",
+      "bait audio/bait 5.mp4"
+    ];
+
+    // ======================================================================
+    // EFEK STUDIO AUDIO (Web Audio API) — Setup SEKALI, tidak ganggu durasi
+    // ======================================================================
+    let audioEffectReady = false;
+
+    function initAudioEffects() {
+      if (audioEffectReady) return;
+      const voiceEl = document.getElementById('voice-poem');
+      if (!voiceEl) return;
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ctx = new AC();
+
+        const src = ctx.createMediaElementSource(voiceEl);
+
+        // Noise gate: potong frekuensi di bawah 100Hz (gemuruh) dan di atas 9kHz (hiss)
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass'; hp.frequency.value = 100;
+
+        const lp = ctx.createBiquadFilter();
+        lp.type = 'lowpass'; lp.frequency.value = 9000;
+
+        // Compressor ringan — vokal lebih mantap & seragam
+        const comp = ctx.createDynamicsCompressor();
+        comp.threshold.value = -22;
+        comp.knee.value = 10;
+        comp.ratio.value = 3;
+        comp.attack.value = 0.04;
+        comp.release.value = 0.2;
+
+        // Reverb sintetis tipis (decay 150ms) — hangat tapi tidak menggema lebay
+        const conv = ctx.createConvolver();
+        const rate = ctx.sampleRate;
+        const len = Math.floor(rate * 0.5);
+        const buf = ctx.createBuffer(2, len, rate);
+        for (let ch = 0; ch < 2; ch++) {
+          const d = buf.getChannelData(ch);
+          for (let i = 0; i < len; i++) {
+            d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (rate * 0.07));
+          }
+        }
+        conv.buffer = buf;
+
+        const dryG = ctx.createGain(); dryG.gain.value = 1.0;
+        const wetG = ctx.createGain(); wetG.gain.value = 0.10; // 10% reverb — tipis tapi berasa
+
+        // Sambungkan chain: src → hp → lp → comp → dry + (conv→wet) → speakers
+        src.connect(hp); hp.connect(lp); lp.connect(comp);
+        comp.connect(dryG); comp.connect(conv);
+        conv.connect(wetG);
+        dryG.connect(ctx.destination);
+        wetG.connect(ctx.destination);
+
+        // Simpan ctx agar bisa di-resume sebelum play
+        voiceEl._audioCtx = ctx;
+        audioEffectReady = true;
+      } catch (err) {
+        console.warn('Web Audio API tidak tersedia:', err);
+      }
+    }
+
     function startWordByWordAnimation() {
       if (poemWordAnimationTimeout) {
         clearTimeout(poemWordAnimationTimeout);
@@ -1208,53 +1399,113 @@
       }
 
       isAnimatingPoem = true;
-      let wordIndex = 0;
-      let currentStanzaIdx = -1;
+      let currentStanzaToTrigger = 0;
+      const voicePoem = document.getElementById('voice-poem');
 
-      function revealNextWord() {
+      function revealStanzaWords(stanzaIdx, durationSec) {
         if (!isAnimatingPoem) return;
 
-        if (wordIndex >= allPoemWords.length) {
-          finishPoemAnimation();
-          return;
-        }
+        // Tampilkan paksa semua kata dari bait-bait sebelumnya jika tertinggal
+        allPoemWords.forEach(w => {
+          if (w.stanzaIndex < stanzaIdx) {
+            w.span.classList.add('revealed');
+            w.stanza.classList.add('stanza-active');
+          }
+        });
 
-        const currentWord = allPoemWords[wordIndex];
+        const wordsInStanza = allPoemWords.filter(w => w.stanzaIndex === stanzaIdx);
+        if (wordsInStanza.length === 0) return;
 
-        // Aktifkan kartu bait saat kata pertama pada bait tersebut muncul
-        if (currentWord.stanzaIndex !== currentStanzaIdx) {
-          currentStanzaIdx = currentWord.stanzaIndex;
-          currentWord.stanza.classList.add('stanza-active');
+        // Aktifkan kartu bait
+        wordsInStanza[0].stanza.classList.add('stanza-active');
 
-          // Auto-scroll halus agar bait yang sedang aktif senantiasa nyaman dibaca di layar HP & PC
-          const container = document.querySelector('.phone-container');
-          if (container) {
-            const stanzaRect = currentWord.stanza.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-            if (stanzaRect.bottom > containerRect.bottom - 40) {
-              container.scrollBy({ top: stanzaRect.height + 25, behavior: 'smooth' });
-            }
+        // Auto-scroll halus
+        const container = document.querySelector('.phone-container');
+        if (container) {
+          const stanzaRect = wordsInStanza[0].stanza.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
+          if (stanzaRect.bottom > containerRect.bottom - 40) {
+            container.scrollBy({ top: stanzaRect.height + 25, behavior: 'smooth' });
           }
         }
 
-        currentWord.span.classList.add('revealed');
-        wordIndex++;
+        // Bagi durasi audio secara merata per kata (distribusi linear)
+        const validDuration = (isFinite(durationSec) && durationSec > 0) ? durationSec : 5;
+        const delayPerWord = (validDuration * 1000) / wordsInStanza.length;
 
-        // Delay dinamis: irama membaca alami & syahdu (~85ms - 105ms)
-        // Jeda lebih panjang pada koma dan tanda baca akhir
-        let delay = 92;
-        const text = currentWord.span.textContent;
-        if (text.endsWith('.') || text.endsWith('...')) {
-          delay = 320;
-        } else if (text.endsWith(',')) {
-          delay = 185;
-        }
-
-        poemWordAnimationTimeout = setTimeout(revealNextWord, delay);
+        wordsInStanza.forEach((wordItem, i) => {
+          const t = i * delayPerWord;
+          const timerId = setTimeout(() => {
+            if (!isAnimatingPoem) return;
+            wordItem.span.classList.add('revealed');
+          }, t);
+          // Guarda todos os timers para poder cancelar depois se necessário
+          wordItem._timerId = timerId;
+        });
       }
 
-      // Mulai penulisan kata pertama setelah transisi layar selesai dibuka
-      poemWordAnimationTimeout = setTimeout(revealNextWord, 300);
+      function playNextStanza() {
+        if (!isAnimatingPoem) return;
+
+        // Batalkan semua timer kata dari bait sebelumnya
+        allPoemWords.forEach(w => {
+          if (w._timerId) { clearTimeout(w._timerId); w._timerId = null; }
+        });
+
+        if (currentStanzaToTrigger >= audioFiles.length) {
+          // Selesai semua bait
+          setTimeout(() => {
+            if (isAnimatingPoem) finishPoemAnimation();
+          }, 1000);
+          return;
+        }
+
+        // Putar audio yang sesuai dengan bait ini
+        if (voicePoem) {
+          voicePoem.src = audioFiles[currentStanzaToTrigger];
+          voicePoem.load();
+
+          // Sinkronisasikan animasi teks setelah metadata audio dimuat (durasi diketahui)
+          voicePoem.onloadedmetadata = () => {
+            revealStanzaWords(currentStanzaToTrigger, voicePoem.duration);
+          };
+
+          voicePoem.volume = MIX_VOICE_VOLUME;
+
+          // Resume AudioContext jika suspended (wajib setelah user gesture)
+          if (voicePoem._audioCtx && voicePoem._audioCtx.state === 'suspended') {
+            voicePoem._audioCtx.resume();
+          }
+
+          voicePoem.play().catch(e => {
+            console.warn("Gagal memutar " + audioFiles[currentStanzaToTrigger], e);
+            revealStanzaWords(currentStanzaToTrigger, 5);
+            setTimeout(() => {
+              currentStanzaToTrigger++;
+              playNextStanza();
+            }, 5000);
+          });
+
+          // Lanjut ke bait berikutnya setelah audio SELESAI
+          voicePoem.onended = () => {
+            // Tampilkan paksa sisa kata jika animasi belum selesai
+            const wordsToForce = allPoemWords.filter(w => w.stanzaIndex === currentStanzaToTrigger);
+            wordsToForce.forEach(w => w.span.classList.add('revealed'));
+
+            currentStanzaToTrigger++;
+            setTimeout(playNextStanza, 500);
+          };
+        } else {
+          revealStanzaWords(currentStanzaToTrigger, 5);
+          setTimeout(() => {
+            currentStanzaToTrigger++;
+            playNextStanza();
+          }, 5000);
+        }
+      }
+
+      // Mulai bait pertama
+      playNextStanza();
     }
 
     function finishPoemAnimation() {
@@ -1303,9 +1554,24 @@
 
     // 1. TRANSISI: LAYAR 0 KE LAYAR 1
     // Terjadi saat layar cover diketuk/ditekan
+    let hasStarted = false;
     function handleScreen0ToScreen1() {
+      if (hasStarted) return;
+      hasStarted = true;
+      // Inisialisasi efek audio SETELAH user gesture (wajib untuk Web Audio API)
+      // Dilakukan setelah durasi sudah bisa dibaca secara normal
+      initAudioEffects();
+
+      // "Pancing" (Prime) elemen audio puisi agar diizinkan berputar otomatis oleh browser
+      const voicePoem = document.getElementById('voice-poem');
+      if (voicePoem) {
+        voicePoem.volume = 0;
+        voicePoem.play().then(() => voicePoem.pause()).catch(() => { });
+      }
+
       // Putar musik latar instrumen piano
       playBackgroundMusic();
+      musicPill.style.display = 'inline-flex'; // Tampilkan tombol musik di layar 1
 
       // Fade-out Layar 0 dengan efek lembut
       screen0.classList.add('fade-out');
@@ -1335,8 +1601,13 @@
     // 2. TRANSISI: LAYAR 1 KE LAYAR 2
     // Terjadi saat tombol "Coba dengerin ini ➔" ditekan
     toScreen2Btn.addEventListener('click', () => {
+      // Hentikan suara puisi jika masih berjalan
+      const voicePoem = document.getElementById('voice-poem');
+      if (voicePoem && !voicePoem.paused) voicePoem.pause();
+
       // Musik latar mengecil perlahan (fade-out audio) agar suara video gitar terdengar jelas
       fadeOutBackgroundMusic(1200);
+      musicPill.style.display = 'none'; // Sembunyikan tombol musik di layar 2
 
       // Fade-out Layar 1
       screen1.classList.add('fade-out');
@@ -1365,17 +1636,53 @@
       fadeOutBackgroundMusic(500);
     });
 
-    // 3. FITUR PUTAR ULANG DARI AWAL
-    replayAllBtn.addEventListener('click', () => {
+    // 3. TRANSISI: LAYAR 2 KE LAYAR 3
+    toScreen3Btn.addEventListener('click', () => {
       // Hentikan video jika sedang berputar
       if (!guitarVideo.paused) {
         guitarVideo.pause();
       }
 
+      // Putar kembali musik latar piano
+      playBackgroundMusic();
+      musicPill.style.display = 'inline-flex';
+
+      // Fade-out Layar 2
       screen2.classList.add('fade-out');
+
       setTimeout(() => {
         screen2.classList.add('hidden');
         screen2.classList.remove('fade-out');
+
+        // Munculkan Layar 3
+        screen3.classList.remove('hidden');
+        screen3.classList.add('fade-in');
+        if (headerPhaseText) headerPhaseText.textContent = "Hadiah Spesial";
+
+        // Scroll kembali ke atas
+        document.querySelector('.phone-container').scrollTo({ top: 0, behavior: 'smooth' });
+      }, 900);
+    });
+
+    // 4. FITUR PUTAR ULANG DARI AWAL
+    replayAllBtn.addEventListener('click', () => {
+      // Hentikan suara puisi jika masih berjalan
+      const voicePoem = document.getElementById('voice-poem');
+      if (voicePoem && !voicePoem.paused) voicePoem.pause();
+
+      // Hentikan video jika sedang berputar
+      if (!guitarVideo.paused) {
+        guitarVideo.pause();
+      }
+      musicPill.style.display = 'none'; // Sembunyikan tombol musik di layar 0
+      bgMusic.pause();
+      stopWarmAcousticSynth();
+      updateMusicPillState(false);
+
+      screen3.classList.add('fade-out');
+      setTimeout(() => {
+        screen3.classList.add('hidden');
+        screen3.classList.remove('fade-out');
 
         // Reset dan tampilkan kembali Layar 0
         screen0.classList.remove('hidden');
@@ -1468,22 +1775,8 @@
 
       animate();
     })();
-    // Coba putar musik sejak awal halaman dimuat
-    window.addEventListener('load', () => {
-      playBackgroundMusic();
-    });
-
-    // Fallback jika autoplay diblokir browser: Putar saat ada sentuhan pertama di mana saja
-    const initMusicOnInteraction = () => {
-      if (bgMusic.paused) {
-        playBackgroundMusic();
-      }
-      document.removeEventListener('click', initMusicOnInteraction);
-      document.removeEventListener('touchstart', initMusicOnInteraction);
-    };
-    
-    document.addEventListener('click', initMusicOnInteraction);
-    document.addEventListener('touchstart', initMusicOnInteraction);
+    // Sembunyikan tombol musik di awal (layar 0) karena musik hanya diputar di layar 1
+    musicPill.style.display = 'none';
 
   </script>
 </body>
